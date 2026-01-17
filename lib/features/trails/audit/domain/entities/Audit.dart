@@ -27,8 +27,5 @@ class Audit {
     required this.empMname,
     required this.empLname,
   });
-
-  /// Optional computed property
-  String get employeeFullName =>
-      '$empFname ${empMname.isNotEmpty ? '$empMname ' : ''}$empLname';
+ 
 }
