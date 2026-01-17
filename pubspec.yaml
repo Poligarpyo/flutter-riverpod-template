@@ -58,7 +58,8 @@ dependencies:
   device_info_plus: ^11.4.0
   crypto: ^3.0.6
   hive_ce_flutter: ^2.3.0
-
+  firebase_core: ^4.3.0
+  firebase_messaging: ^16.1.0
 
 dev_dependencies:
   flutter_test:

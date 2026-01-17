@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "776713964517",
+    "project_id": "hfrs-990af",
+    "storage_bucket": "hfrs-990af.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776713964517:android:a1835d8a96c5f539367d0c",
+        "android_client_info": {
+          "package_name": "com.example.temp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAra9rEe7qbGN0-BG-fbnTENZ2ktDVv0Js"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

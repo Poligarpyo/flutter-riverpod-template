@@ -37,8 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthUiModel authUiModel =
-        ref.watch(loginControllerProvider); // Access the state
+    final AuthUiModel authUiModel = ref.watch(loginControllerProvider); // Access the state
     ref.listen(loginControllerProvider,
         (AuthUiModel? previous, AuthUiModel next) {
       if (next.user != null) {
@@ -47,28 +46,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       }
     });
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: const Text('Login'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.person_outline_outlined),
-            onPressed: () async {
-              await showAdaptiveDialog<void>(
-                  context: context,
-                  builder: (_) {
-                    return const RegisterDialog();
-                  });
-            },
-          ),
-        ],
-        leading: IconButton(
-          icon: const Icon(Icons.settings_outlined),
-          onPressed: () {
-            // throw UnimplementedError();
-          },
-        ),
-      ),
+      extendBodyBehindAppBar: true, 
       body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 24),
           child: CustomScrollView(
@@ -79,27 +57,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const Spacer(),
-                    Center(
-                        child: Image.asset(
-                      Assets.logo,
-                      height: 90,
-                      width: 90,
-                    )),
-                    const Spacer(),
-                    Center(
-                      child: Text('Welcome to the app',
-                          style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary)),
-                    ),
-                    const Gap(10),
-                    const Text('You can login with your email and password',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        )),
+                    // Center(
+                    //     child: Image.asset(
+                    //   Assets.logo,
+                    //   height: 90,
+                    //   width: 90,
+                    // )), 
+                    const Gap(10), 
                     const Spacer(),
                     const Text('Login',
                         style: TextStyle(
@@ -213,29 +177,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                             )),
-                        const Spacer(),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            // ignore: use_named_constants since they dont allow constant values
-                            minimumSize: const Size(0, 0),
-                            // ignore: use_named_constants
-                            padding: const EdgeInsets.all(0),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: const Text('Create an account',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline)),
-                          onPressed: () async {
-                            await showAdaptiveDialog<void>(
-                              context: context,
-                              barrierDismissible: true,
-                              barrierColor: Colors.black54,
-                              builder: (_) {
-                                return const RegisterDialog();
-                              },
-                            );
-                          },
-                        ),
+                         
                       ],
                     ),
                     const Spacer(flex: 2),

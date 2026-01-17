@@ -10,11 +10,17 @@ class Endpoints {
 
 
   //* This is for hfrs
-  static const String hfrsBaseUrl = 'https://hfrs.taytaypalawan.net/barangay/mobile/hfrs/';
+  static const String hfrsBaseUrl = 'https://hfrs.taytaypalawan.net/barangay/mobile/';
 
-  static const String displayHousehold = 'display-household';
-  static const String displayFamily = 'display-family';
-  static const String displayIndiv = 'display-indiv';
+
+  // Reports Endpoints
+  static const String displayHousehold = 'reports/display-household';
+  static const String displayFamily = 'reports/display-family';
+  static const String displayIndiv = 'reports/display-indiv';
+ 
+  // others Endpoints
+  static const String fetchAuditTrail = 'others/audit_trail';
+
 
 
   //! Dont put api key on the client side. Do it on the server side

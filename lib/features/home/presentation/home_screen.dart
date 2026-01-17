@@ -5,12 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../../utils/context_extensions.dart';
-import 'widgets/CategoryItem.dart';
-import 'widgets/header.dart';
-import 'widgets/language_tile.dart';
-import 'widgets/social_tile_widget.dart';
-import 'widgets/theme_widget.dart';
-
+import 'widgets/CardItem.dart';
+import '../../reports/widgets/CategoryItem.dart';
+import 'widgets/header.dart'; 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -33,9 +30,8 @@ class HomeScreen extends ConsumerWidget {
           children: [
             Header(text: 'intro'),
             SizedBox(height: 20),
-            CategoryItem(label: 'List of Household'),
-            CategoryItem(label: 'List of Family'),
-            CategoryItem(label: 'List of Individual'),
+            CardItem(title: 'Reports'),
+            CardItem(title: 'Others'), 
           ],
         ),
       ),
