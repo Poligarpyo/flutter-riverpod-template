@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../utils/context_extensions.dart';
-import '../home/presentation/widgets/header.dart';
+import '../home/presentation/widgets/widgets/header.dart'; 
 import 'widgets/CategoryItem.dart';
 
 class TrailsScreen extends ConsumerWidget {

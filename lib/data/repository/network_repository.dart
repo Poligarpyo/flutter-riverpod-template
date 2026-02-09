@@ -1,10 +1,18 @@
 import 'dart:async';
-
+import 'package:flutter/widgets.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:dio/dio.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../common/app_snackbar.dart';
+import '../../common/navigation_keys.dart';
 import '../../constants/endpoints.dart';
-import '../../utils/cachefor_extension.dart';
+import '../../core/storage/auth_local_datasource_provider.dart';
+import '../../features/authentication/data/hive/user_repository.dart';
+import '../../features/authentication/domain/auth/auth_controller.dart';
+import '../../router/app_router.dart';
+import '../auth/auth_interceptor.dart';
 
 part 'network_repository.g.dart';
 
@@ -15,51 +23,61 @@ part 'network_repository.g.dart';
 class NetworkRepository extends _$NetworkRepository {
   @override
   Dio build() {
-    final Dio dio = Dio(BaseOptions(baseUrl: Endpoints.baseUrl));
-    // Accept: application/json"
-    dio.options.headers['Accept'] = 'application/json';
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: Endpoints.peanutUrl,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
+          'x-api-key': Endpoints.apiKey,
+        },
+      ),
+    );
 
-    // Content-Type: application/json
-    dio.options.headers['Content-Type'] = 'application/json';
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          print('➡️ Request [${options.method}] => PATH: ${options.path}');
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          print(
+              '✅ Response [${response.statusCode}] => DATA: ${response.data}');
+          return handler.next(response);
+        },
+        onError: (DioException err, handler) async {
+          final status = err.response?.statusCode;
 
-    // set api key
-    dio.options.headers['x-api-key'] = Endpoints.apiKey;
+          if (status == 500) {
+            await _handleUnauthorized();
+          } 
+          return handler.next(err);
+        },
+      ),
+    );
 
-    /// Add Logger for debugging
-    dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+    dio.interceptors.add(
+      AuthInterceptor(ref),
+    );
+
     return dio;
-  }
-
-  set baseUrl(String baseUrl) {
-    state.options.baseUrl = baseUrl;
-  }
-
-  void setApiKey(String apiKey) {
-    state.options.headers['x-api-key'] = apiKey;
   }
 
   void setToken(String token) {
     state.options.headers['Authorization'] = 'Bearer $token';
-
-    /// Cache the token for 1 day
-    ref.cacheFor(const Duration(days: 1));
   }
 
-  Future<Response<T>> get<T>(String path,
-      {Map<String, dynamic>? queryParameters, String? baseUrl}) async {
-    if (baseUrl != null) {
-      state.options.baseUrl = baseUrl;
-    }
-    return state.get(path, queryParameters: queryParameters);
+  void clearToken() {
+    state.options.headers.remove('Authorization');
   }
 
-  Future<Response<T>> post<T>(String path,
-      {dynamic data,
-      Map<String, dynamic>? queryParameters,
-      String? baseUrl}) async {
-    if (baseUrl != null) {
-      state.options.baseUrl = baseUrl;
-    }
-    return state.post(path, data: data, queryParameters: queryParameters);
+  Future<void> _handleUnauthorized() async {
+    final ref = this.ref;
+    clearToken();
+
+    // Logout AND show snackbar (once)
+    await ref
+        .read(authControllerProvider.notifier)
+        .logout(message: 'Session expired. You have been logged out.3333');
   }
 }

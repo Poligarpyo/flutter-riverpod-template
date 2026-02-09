@@ -7,53 +7,37 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce/hive.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 import 'constants/strings.dart';
+import 'core/storage/auth_local_datasource.dart';
+import 'data/app/app_initializer.dart';
 import 'hive/hive.dart';
 import 'my_app.dart';
-
-/// Try using const constructors as much as possible!
-
+ 
 void main() async {
-  /// Initialize packages
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await initHive();
   await setPreferredOrientations();
-  if (!kIsWeb) {
-    if (Platform.isAndroid) {
-      await FlutterDisplayMode.setHighRefreshRate();
-    }
-  }
+  await Hive.initFlutter();
+  await Hive.openBox(authBoxName);
 
-  if (kReleaseMode) {
-    /// Disable debugPrint in release mode
-    /// This will prevent any debugPrint statements from being executed
-    /// and will not print anything to the console.
-    /// You can also use a custom implementation if needed
-    debugPrint = (String? message, {int? wrapWidth}) {};
-  }
+  // ✅ ProviderContainer for pre-initializing providers
+  final container = ProviderContainer();
+  await container.read(appInitializerProvider.future);
 
   runApp(
-    ProviderScope(
+    UncontrolledProviderScope(
+      container: container,
       child: EasyLocalization(
-        supportedLocales: const <Locale>[
-          /// Add your supported locales here
-          Locale('en'),
-          Locale('tr'),
-        ],
+        supportedLocales: const [Locale('en'), Locale('tr')],
         path: Strings.localizationsPath,
         fallbackLocale: const Locale('en'),
         child: const MyApp(),
       ),
     ),
   );
-
-  /// Add this line to get the error stack trace in release mode
-  FlutterError.demangleStackTrace = (StackTrace stack) {
-    if (stack is stack_trace.Trace) return stack.vmTrace;
-    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
-    return stack;
-  };
 }

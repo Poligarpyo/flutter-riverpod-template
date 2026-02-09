@@ -34,15 +34,13 @@ class _AuditScreenState extends ConsumerState<AuditScreen> {
         if (_isWaitingToLoadMore) return;
         if (_loadMoreTimer?.isActive ?? false) return;
 
-        _loadMoreTimer = Timer(const Duration(seconds: 2), () {
-          print("wwqqqq");
+        _loadMoreTimer = Timer(const Duration(seconds: 2), () { 
           ref
               .read(auditProvider.notifier)
               .loadMore(search: _searchController.text);
         });
       }
-    });
-    print("object");
+    }); 
   }
 
   @override

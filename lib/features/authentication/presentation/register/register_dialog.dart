@@ -109,36 +109,36 @@ class _RegisterDialogState extends ConsumerState<RegisterDialog> {
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    ref
-                        .read(loginControllerProvider.notifier)
-                        .register(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        )
-                        .then((RegisterResponse value) {
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                      }
-                    }).catchError((dynamic error) {
-                      // Handle error
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(error.toString()),
-                          ),
-                        );
-                      }
-                    });
-                  },
-                  child: Text(
-                    'Register',
-                    style: context.textTheme.titleMedium?.copyWith(
-                      color: context.colorScheme.onPrimary,
-                    ),
-                  ),
-                ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     ref
+                //         .read(loginControllerProvider.notifier)
+                //         .register(
+                //           email: _emailController.text,
+                //           password: _passwordController.text,
+                //         )
+                //         .then((RegisterResponse value) {
+                //       if (context.mounted) {
+                //         Navigator.pop(context);
+                //       }
+                //     }).catchError((dynamic error) {
+                //       // Handle error
+                //       if (context.mounted) {
+                //         ScaffoldMessenger.of(context).showSnackBar(
+                //           SnackBar(
+                //             content: Text(error.toString()),
+                //           ),
+                //         );
+                //       }
+                //     });
+                //   },
+                //   child: Text(
+                //     'Register',
+                //     style: context.textTheme.titleMedium?.copyWith(
+                //       color: context.colorScheme.onPrimary,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],

@@ -51,7 +51,7 @@ class LoginCredentialsAdapter extends TypeAdapter<LoginCredentials> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return LoginCredentials(
-      email: fields[0] as String,
+      login: fields[3] as String,
       password: fields[1] as String,
     );
   }
@@ -60,10 +60,10 @@ class LoginCredentialsAdapter extends TypeAdapter<LoginCredentials> {
   void write(BinaryWriter writer, LoginCredentials obj) {
     writer
       ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.email)
       ..writeByte(1)
-      ..write(obj.password);
+      ..write(obj.password)
+      ..writeByte(3)
+      ..write(obj.login);
   }
 
   @override

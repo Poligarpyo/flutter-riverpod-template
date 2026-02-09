@@ -14,6 +14,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$LoginResponse {
+  bool get result;
   String get token;
 
   /// Create a copy of LoginResponse
@@ -32,16 +33,17 @@ mixin _$LoginResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is LoginResponse &&
+            (identical(other.result, result) || other.result == result) &&
             (identical(other.token, token) || other.token == token));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(runtimeType, result, token);
 
   @override
   String toString() {
-    return 'LoginResponse(token: $token)';
+    return 'LoginResponse(result: $result, token: $token)';
   }
 }
 
@@ -51,7 +53,7 @@ abstract mixin class $LoginResponseCopyWith<$Res> {
           LoginResponse value, $Res Function(LoginResponse) _then) =
       _$LoginResponseCopyWithImpl;
   @useResult
-  $Res call({String token});
+  $Res call({bool result, String token});
 }
 
 /// @nodoc
@@ -67,9 +69,14 @@ class _$LoginResponseCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? result = null,
     Object? token = null,
   }) {
     return _then(_self.copyWith(
+      result: null == result
+          ? _self.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
       token: null == token
           ? _self.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -171,13 +178,13 @@ extension LoginResponsePatterns on LoginResponse {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String token)? $default, {
+    TResult Function(bool result, String token)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _LoginResponse() when $default != null:
-        return $default(_that.token);
+        return $default(_that.result, _that.token);
       case _:
         return orElse();
     }
@@ -198,12 +205,12 @@ extension LoginResponsePatterns on LoginResponse {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String token) $default,
+    TResult Function(bool result, String token) $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LoginResponse():
-        return $default(_that.token);
+        return $default(_that.result, _that.token);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -223,12 +230,12 @@ extension LoginResponsePatterns on LoginResponse {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String token)? $default,
+    TResult? Function(bool result, String token)? $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LoginResponse() when $default != null:
-        return $default(_that.token);
+        return $default(_that.result, _that.token);
       case _:
         return null;
     }
@@ -238,10 +245,12 @@ extension LoginResponsePatterns on LoginResponse {
 /// @nodoc
 @JsonSerializable()
 class _LoginResponse implements LoginResponse {
-  const _LoginResponse({required this.token});
+  const _LoginResponse({required this.result, required this.token});
   factory _LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);
 
+  @override
+  final bool result;
   @override
   final String token;
 
@@ -265,16 +274,17 @@ class _LoginResponse implements LoginResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LoginResponse &&
+            (identical(other.result, result) || other.result == result) &&
             (identical(other.token, token) || other.token == token));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(runtimeType, result, token);
 
   @override
   String toString() {
-    return 'LoginResponse(token: $token)';
+    return 'LoginResponse(result: $result, token: $token)';
   }
 }
 
@@ -286,7 +296,7 @@ abstract mixin class _$LoginResponseCopyWith<$Res>
       __$LoginResponseCopyWithImpl;
   @override
   @useResult
-  $Res call({String token});
+  $Res call({bool result, String token});
 }
 
 /// @nodoc
@@ -302,9 +312,14 @@ class __$LoginResponseCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
+    Object? result = null,
     Object? token = null,
   }) {
     return _then(_LoginResponse(
+      result: null == result
+          ? _self.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
       token: null == token
           ? _self.token
           : token // ignore: cast_nullable_to_non_nullable

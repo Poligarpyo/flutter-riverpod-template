@@ -12,12 +12,12 @@ class DioHelper {
 
     _dio = Dio(
       BaseOptions(
-        baseUrl: Endpoints.hfrsBaseUrl, // Your API base URL
+        baseUrl: Endpoints.peanutUrl, 
         connectTimeout: const Duration(milliseconds: Endpoints.connectionTimeout),
         receiveTimeout: const Duration(milliseconds: Endpoints.receiveTimeout),
         headers: <String, dynamic>{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          'Content-Type': 'application/json-patch+json',
+          'Accept': 'application/json/*/*',
         },
       ),
     );
@@ -37,6 +37,7 @@ class DioHelper {
           return handler.next(response);
         },
         onError: (DioError e, handler) {
+          
           print('❌ Error [${e.response?.statusCode}] => MESSAGE: ${e.message}');
           return handler.next(e);
         },

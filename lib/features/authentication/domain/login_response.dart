@@ -5,7 +5,8 @@ part 'login_response.g.dart';
 
 @freezed
 abstract class LoginResponse with _$LoginResponse {
-  const factory LoginResponse({
+  const factory LoginResponse({  
+    required bool result,
     required String token,
   }) = _LoginResponse;
 

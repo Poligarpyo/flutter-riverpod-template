@@ -3,10 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common/app_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../router/app_router.dart';
+import '../../domain/auth/auth_controller.dart';
 import '../../domain/login_response.dart';
 import '../register/register_dialog.dart';
+import '../widgets/buildBrandSection.dart';
+import '../widgets/buildDivider.dart';
+import '../widgets/buildLoginButton.dart';
+import '../widgets/buildModernTextField.dart';
+import '../widgets/buildOptionsRow.dart';
+import '../widgets/buildSocialLoginOptions.dart';
+import '../widgets/buildWelcomeSection.dart';
+import '../widgets/handleLogin.dart';
 import 'auth_ui_model.dart';
 import 'login_controller.dart';
 
@@ -17,220 +27,142 @@ class LoginScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
-  late final TextEditingController _emailController;
-  late final TextEditingController _passwordController;
+class _LoginScreenState extends ConsumerState<LoginScreen>
+    with SingleTickerProviderStateMixin {
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _usernameFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeOutCubic,
+    ));
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _userNameController.dispose();
     _passwordController.dispose();
+    _usernameFocus.dispose();
+    _passwordFocus.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final AuthUiModel authUiModel = ref.watch(loginControllerProvider); // Access the state
+    final AuthUiModel authUiModel = ref.watch(loginControllerProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     ref.listen(loginControllerProvider,
         (AuthUiModel? previous, AuthUiModel next) {
       if (next.user != null) {
-        _emailController.text = next.user!.email;
+        _userNameController.text = next.user!.login;
         _passwordController.text = next.user!.password;
       }
     });
     return Scaffold(
-      extendBodyBehindAppBar: true, 
+      backgroundColor:
+          isDark ? const Color(0xFF0A0A0A) : const Color(0xFFFAFAFA),
       body: SafeArea(
-          minimum: const EdgeInsets.symmetric(horizontal: 24),
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Spacer(),
-                    // Center(
-                    //     child: Image.asset(
-                    //   Assets.logo,
-                    //   height: 90,
-                    //   width: 90,
-                    // )), 
-                    const Gap(10), 
-                    const Spacer(),
-                    const Text('Login',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        )),
-                    const Gap(10),
-                    TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      autofillHints: const <String>[
-                        AutofillHints.email,
-                      ],
-                      autovalidateMode: AutovalidateMode.onUnfocus,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter an email address';
-                        }
-                        // Regex for validating email format
-                        final RegExp emailRegex = RegExp(
-                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                        );
-                        if (!emailRegex.hasMatch(value)) {
-                          return 'Please enter a valid email address';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        hintText: 'Enter your email',
-                        hintStyle: TextStyle(
-                          color: Colors.black54,
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: SlideTransition(
+                position: _slideAnimation,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 440),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Gap(40),
+                        // Logo or Brand Icon
+                        buildBrandSection(isDark),
+                        const Gap(48),
+                        // Welcome Text
+                        buildWelcomeSection(isDark),
+                        const Gap(40),
+                        // Username Field
+                        buildModernTextField(
+                          controller: _userNameController,
+                          focusNode: _usernameFocus,
+                          hintText: 'Username',
+                          icon: Icons.person_outline_rounded,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
+                          isDark: isDark,
+                          onFieldSubmitted: (_) {
+                            _passwordFocus.requestFocus();
+                          },
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                      ),
-                    ),
-                    const Gap(15),
-                    const Text('Password',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500)),
-                    const Gap(10),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: !authUiModel.showPassword,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      autofillHints: const <String>[
-                        AutofillHints.password,
-                      ],
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                      // validator: (String? value) {
-                      //   /// Password validation logic
-                      //   if (value != null && value.isNotEmpty) {
-                      //     return 'Check letter case carefully.';
-                      //   }
-                      //   return null;
-                      // },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      onFieldSubmitted: (String value) {
-                        FocusScope.of(context).unfocus();
-                        ref.read(loginControllerProvider.notifier).login(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            );
-                      },
-                      decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          hintText: 'Enter your password',
-                          hintStyle: const TextStyle(
-                            color: Colors.black54,
-                          ),
+                        const Gap(20),
+                        // Password Field
+                        buildModernTextField(
+                          controller: _passwordController,
+                          focusNode: _passwordFocus,
+                          hintText: 'Password',
+                          icon: Icons.lock_outline_rounded,
+                          isPassword: true,
+                          obscureText: !authUiModel.showPassword,
+                          isDark: isDark,
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => handleLogin(context, ref,
+                              _userNameController, _passwordController),
                           suffixIcon: IconButton(
                             icon: Icon(
                               authUiModel.showPassword
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined,
+                                  ? Icons.visibility_rounded
+                                  : Icons.visibility_off_rounded,
+                              color: isDark
+                                  ? Colors.grey.shade400
+                                  : Colors.grey.shade600,
+                              size: 22,
                             ),
                             onPressed: () => ref
                                 .read(loginControllerProvider.notifier)
                                 .updateShowPassword(!authUiModel.showPassword),
-                          )),
-                    ),
-                    const Gap(10),
-                    Row(
-                      children: <Widget>[
-                        SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: Checkbox(
-                              value: authUiModel.rememberMe,
-                              onChanged: (bool? value) {
-                                ref
-                                    .read(loginControllerProvider.notifier)
-                                    .updateRememberMe(value ?? false);
-                              },
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                            )),
-                        const Gap(5),
-                        const Text('Remember me',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            )),
-                         
+                          ),
+                        ),
+                        const Gap(16),
+                        // Remember me & Forgot password
+                        // buildOptionsRow(authUiModel, isDark, ref),
+                        // const Gap(32),
+                        // Login Button
+                        buildLoginButton(context, authUiModel, isDark, ref,
+                            _userNameController, _passwordController),
+                        const Gap(24),
                       ],
                     ),
-                    const Spacer(flex: 2),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      onPressed: () {
-                        ref
-                            .read(loginControllerProvider.notifier)
-                            .login(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            )
-                            .catchError((dynamic error, StackTrace stackTrace) {
-                          // Handle error here
-                          if (context.mounted) {
-                            // Show error message to the user
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(error.toString()),
-                              ),
-                            );
-                          }
-                          return const LoginResponse(token: '');
-                        }).then(
-                          (LoginResponse loginResponse) {
-                            // Check for token and also context.mounted
-                            // to avoid context access after dispose
-                            if (loginResponse.token.isNotEmpty &&
-                                context.mounted) {
-                              // Handle successful login
-                              context.push(SGRoute.home.route);
-                            }
-                          },
-                        );
-                      },
-                      child: authUiModel.isLoading
-                          ? const CircularProgressIndicator()
-                          : const Text('Login'),
-                    ),
-                    const Spacer(flex: 4),
-                  ],
+                  ),
                 ),
               ),
-            ],
-          )),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

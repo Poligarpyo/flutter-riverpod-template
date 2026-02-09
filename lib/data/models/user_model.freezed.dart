@@ -14,11 +14,25 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$UserModel {
-  int get id;
-  String get email;
-  String get firstName;
-  String get lastName;
-  String? get avatar;
+  String get address;
+  double get balance;
+  String get city;
+  String get country;
+  int get currency;
+  int get currentTradesCount;
+  double get currentTradesVolume;
+  double get equity;
+  double get freeMargin;
+  bool get isAnyOpenTrades;
+  bool get isSwapFree;
+  int get leverage;
+  String get name;
+  String get phone;
+  int get totalTradesCount;
+  double get totalTradesVolume;
+  int get type;
+  int get verificationLevel;
+  String get zipCode;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -35,23 +49,65 @@ mixin _$UserModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is UserModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.currentTradesCount, currentTradesCount) ||
+                other.currentTradesCount == currentTradesCount) &&
+            (identical(other.currentTradesVolume, currentTradesVolume) ||
+                other.currentTradesVolume == currentTradesVolume) &&
+            (identical(other.equity, equity) || other.equity == equity) &&
+            (identical(other.freeMargin, freeMargin) ||
+                other.freeMargin == freeMargin) &&
+            (identical(other.isAnyOpenTrades, isAnyOpenTrades) ||
+                other.isAnyOpenTrades == isAnyOpenTrades) &&
+            (identical(other.isSwapFree, isSwapFree) ||
+                other.isSwapFree == isSwapFree) &&
+            (identical(other.leverage, leverage) ||
+                other.leverage == leverage) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.totalTradesCount, totalTradesCount) ||
+                other.totalTradesCount == totalTradesCount) &&
+            (identical(other.totalTradesVolume, totalTradesVolume) ||
+                other.totalTradesVolume == totalTradesVolume) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.verificationLevel, verificationLevel) ||
+                other.verificationLevel == verificationLevel) &&
+            (identical(other.zipCode, zipCode) || other.zipCode == zipCode));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, email, firstName, lastName, avatar);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        address,
+        balance,
+        city,
+        country,
+        currency,
+        currentTradesCount,
+        currentTradesVolume,
+        equity,
+        freeMargin,
+        isAnyOpenTrades,
+        isSwapFree,
+        leverage,
+        name,
+        phone,
+        totalTradesCount,
+        totalTradesVolume,
+        type,
+        verificationLevel,
+        zipCode
+      ]);
 
   @override
   String toString() {
-    return 'UserModel(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatar: $avatar)';
+    return 'UserModel(address: $address, balance: $balance, city: $city, country: $country, currency: $currency, currentTradesCount: $currentTradesCount, currentTradesVolume: $currentTradesVolume, equity: $equity, freeMargin: $freeMargin, isAnyOpenTrades: $isAnyOpenTrades, isSwapFree: $isSwapFree, leverage: $leverage, name: $name, phone: $phone, totalTradesCount: $totalTradesCount, totalTradesVolume: $totalTradesVolume, type: $type, verificationLevel: $verificationLevel, zipCode: $zipCode)';
   }
 }
 
@@ -61,11 +117,25 @@ abstract mixin class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl;
   @useResult
   $Res call(
-      {int id,
-      String email,
-      String firstName,
-      String lastName,
-      String? avatar});
+      {String address,
+      double balance,
+      String city,
+      String country,
+      int currency,
+      int currentTradesCount,
+      double currentTradesVolume,
+      double equity,
+      double freeMargin,
+      bool isAnyOpenTrades,
+      bool isSwapFree,
+      int leverage,
+      String name,
+      String phone,
+      int totalTradesCount,
+      double totalTradesVolume,
+      int type,
+      int verificationLevel,
+      String zipCode});
 }
 
 /// @nodoc
@@ -80,33 +150,103 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? email = null,
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? avatar = freezed,
+    Object? address = null,
+    Object? balance = null,
+    Object? city = null,
+    Object? country = null,
+    Object? currency = null,
+    Object? currentTradesCount = null,
+    Object? currentTradesVolume = null,
+    Object? equity = null,
+    Object? freeMargin = null,
+    Object? isAnyOpenTrades = null,
+    Object? isSwapFree = null,
+    Object? leverage = null,
+    Object? name = null,
+    Object? phone = null,
+    Object? totalTradesCount = null,
+    Object? totalTradesVolume = null,
+    Object? type = null,
+    Object? verificationLevel = null,
+    Object? zipCode = null,
   }) {
     return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
+      address: null == address
+          ? _self.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: null == balance
+          ? _self.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      city: null == city
+          ? _self.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _self.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      currency: null == currency
+          ? _self.currency
+          : currency // ignore: cast_nullable_to_non_nullable
               as int,
-      email: null == email
-          ? _self.email
-          : email // ignore: cast_nullable_to_non_nullable
+      currentTradesCount: null == currentTradesCount
+          ? _self.currentTradesCount
+          : currentTradesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentTradesVolume: null == currentTradesVolume
+          ? _self.currentTradesVolume
+          : currentTradesVolume // ignore: cast_nullable_to_non_nullable
+              as double,
+      equity: null == equity
+          ? _self.equity
+          : equity // ignore: cast_nullable_to_non_nullable
+              as double,
+      freeMargin: null == freeMargin
+          ? _self.freeMargin
+          : freeMargin // ignore: cast_nullable_to_non_nullable
+              as double,
+      isAnyOpenTrades: null == isAnyOpenTrades
+          ? _self.isAnyOpenTrades
+          : isAnyOpenTrades // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSwapFree: null == isSwapFree
+          ? _self.isSwapFree
+          : isSwapFree // ignore: cast_nullable_to_non_nullable
+              as bool,
+      leverage: null == leverage
+          ? _self.leverage
+          : leverage // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: null == firstName
-          ? _self.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _self.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
-          ? _self.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      totalTradesCount: null == totalTradesCount
+          ? _self.totalTradesCount
+          : totalTradesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalTradesVolume: null == totalTradesVolume
+          ? _self.totalTradesVolume
+          : totalTradesVolume // ignore: cast_nullable_to_non_nullable
+              as double,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int,
+      verificationLevel: null == verificationLevel
+          ? _self.verificationLevel
+          : verificationLevel // ignore: cast_nullable_to_non_nullable
+              as int,
+      zipCode: null == zipCode
+          ? _self.zipCode
+          : zipCode // ignore: cast_nullable_to_non_nullable
               as String,
-      avatar: freezed == avatar
-          ? _self.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -204,16 +344,52 @@ extension UserModelPatterns on UserModel {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(int id, String email, String firstName, String lastName,
-            String? avatar)?
+    TResult Function(
+            String address,
+            double balance,
+            String city,
+            String country,
+            int currency,
+            int currentTradesCount,
+            double currentTradesVolume,
+            double equity,
+            double freeMargin,
+            bool isAnyOpenTrades,
+            bool isSwapFree,
+            int leverage,
+            String name,
+            String phone,
+            int totalTradesCount,
+            double totalTradesVolume,
+            int type,
+            int verificationLevel,
+            String zipCode)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _UserModel() when $default != null:
-        return $default(_that.id, _that.email, _that.firstName, _that.lastName,
-            _that.avatar);
+        return $default(
+            _that.address,
+            _that.balance,
+            _that.city,
+            _that.country,
+            _that.currency,
+            _that.currentTradesCount,
+            _that.currentTradesVolume,
+            _that.equity,
+            _that.freeMargin,
+            _that.isAnyOpenTrades,
+            _that.isSwapFree,
+            _that.leverage,
+            _that.name,
+            _that.phone,
+            _that.totalTradesCount,
+            _that.totalTradesVolume,
+            _that.type,
+            _that.verificationLevel,
+            _that.zipCode);
       case _:
         return orElse();
     }
@@ -234,15 +410,51 @@ extension UserModelPatterns on UserModel {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(int id, String email, String firstName, String lastName,
-            String? avatar)
+    TResult Function(
+            String address,
+            double balance,
+            String city,
+            String country,
+            int currency,
+            int currentTradesCount,
+            double currentTradesVolume,
+            double equity,
+            double freeMargin,
+            bool isAnyOpenTrades,
+            bool isSwapFree,
+            int leverage,
+            String name,
+            String phone,
+            int totalTradesCount,
+            double totalTradesVolume,
+            int type,
+            int verificationLevel,
+            String zipCode)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _UserModel():
-        return $default(_that.id, _that.email, _that.firstName, _that.lastName,
-            _that.avatar);
+        return $default(
+            _that.address,
+            _that.balance,
+            _that.city,
+            _that.country,
+            _that.currency,
+            _that.currentTradesCount,
+            _that.currentTradesVolume,
+            _that.equity,
+            _that.freeMargin,
+            _that.isAnyOpenTrades,
+            _that.isSwapFree,
+            _that.leverage,
+            _that.name,
+            _that.phone,
+            _that.totalTradesCount,
+            _that.totalTradesVolume,
+            _that.type,
+            _that.verificationLevel,
+            _that.zipCode);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -262,15 +474,51 @@ extension UserModelPatterns on UserModel {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(int id, String email, String firstName, String lastName,
-            String? avatar)?
+    TResult? Function(
+            String address,
+            double balance,
+            String city,
+            String country,
+            int currency,
+            int currentTradesCount,
+            double currentTradesVolume,
+            double equity,
+            double freeMargin,
+            bool isAnyOpenTrades,
+            bool isSwapFree,
+            int leverage,
+            String name,
+            String phone,
+            int totalTradesCount,
+            double totalTradesVolume,
+            int type,
+            int verificationLevel,
+            String zipCode)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _UserModel() when $default != null:
-        return $default(_that.id, _that.email, _that.firstName, _that.lastName,
-            _that.avatar);
+        return $default(
+            _that.address,
+            _that.balance,
+            _that.city,
+            _that.country,
+            _that.currency,
+            _that.currentTradesCount,
+            _that.currentTradesVolume,
+            _that.equity,
+            _that.freeMargin,
+            _that.isAnyOpenTrades,
+            _that.isSwapFree,
+            _that.leverage,
+            _that.name,
+            _that.phone,
+            _that.totalTradesCount,
+            _that.totalTradesVolume,
+            _that.type,
+            _that.verificationLevel,
+            _that.zipCode);
       case _:
         return null;
     }
@@ -281,24 +529,66 @@ extension UserModelPatterns on UserModel {
 @JsonSerializable()
 class _UserModel implements UserModel {
   const _UserModel(
-      {required this.id,
-      required this.email,
-      required this.firstName,
-      required this.lastName,
-      this.avatar});
+      {required this.address,
+      required this.balance,
+      required this.city,
+      required this.country,
+      required this.currency,
+      required this.currentTradesCount,
+      required this.currentTradesVolume,
+      required this.equity,
+      required this.freeMargin,
+      required this.isAnyOpenTrades,
+      required this.isSwapFree,
+      required this.leverage,
+      required this.name,
+      required this.phone,
+      required this.totalTradesCount,
+      required this.totalTradesVolume,
+      required this.type,
+      required this.verificationLevel,
+      required this.zipCode});
   factory _UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 
   @override
-  final int id;
+  final String address;
   @override
-  final String email;
+  final double balance;
   @override
-  final String firstName;
+  final String city;
   @override
-  final String lastName;
+  final String country;
   @override
-  final String? avatar;
+  final int currency;
+  @override
+  final int currentTradesCount;
+  @override
+  final double currentTradesVolume;
+  @override
+  final double equity;
+  @override
+  final double freeMargin;
+  @override
+  final bool isAnyOpenTrades;
+  @override
+  final bool isSwapFree;
+  @override
+  final int leverage;
+  @override
+  final String name;
+  @override
+  final String phone;
+  @override
+  final int totalTradesCount;
+  @override
+  final double totalTradesVolume;
+  @override
+  final int type;
+  @override
+  final int verificationLevel;
+  @override
+  final String zipCode;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -320,23 +610,65 @@ class _UserModel implements UserModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.currentTradesCount, currentTradesCount) ||
+                other.currentTradesCount == currentTradesCount) &&
+            (identical(other.currentTradesVolume, currentTradesVolume) ||
+                other.currentTradesVolume == currentTradesVolume) &&
+            (identical(other.equity, equity) || other.equity == equity) &&
+            (identical(other.freeMargin, freeMargin) ||
+                other.freeMargin == freeMargin) &&
+            (identical(other.isAnyOpenTrades, isAnyOpenTrades) ||
+                other.isAnyOpenTrades == isAnyOpenTrades) &&
+            (identical(other.isSwapFree, isSwapFree) ||
+                other.isSwapFree == isSwapFree) &&
+            (identical(other.leverage, leverage) ||
+                other.leverage == leverage) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.totalTradesCount, totalTradesCount) ||
+                other.totalTradesCount == totalTradesCount) &&
+            (identical(other.totalTradesVolume, totalTradesVolume) ||
+                other.totalTradesVolume == totalTradesVolume) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.verificationLevel, verificationLevel) ||
+                other.verificationLevel == verificationLevel) &&
+            (identical(other.zipCode, zipCode) || other.zipCode == zipCode));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, email, firstName, lastName, avatar);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        address,
+        balance,
+        city,
+        country,
+        currency,
+        currentTradesCount,
+        currentTradesVolume,
+        equity,
+        freeMargin,
+        isAnyOpenTrades,
+        isSwapFree,
+        leverage,
+        name,
+        phone,
+        totalTradesCount,
+        totalTradesVolume,
+        type,
+        verificationLevel,
+        zipCode
+      ]);
 
   @override
   String toString() {
-    return 'UserModel(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatar: $avatar)';
+    return 'UserModel(address: $address, balance: $balance, city: $city, country: $country, currency: $currency, currentTradesCount: $currentTradesCount, currentTradesVolume: $currentTradesVolume, equity: $equity, freeMargin: $freeMargin, isAnyOpenTrades: $isAnyOpenTrades, isSwapFree: $isSwapFree, leverage: $leverage, name: $name, phone: $phone, totalTradesCount: $totalTradesCount, totalTradesVolume: $totalTradesVolume, type: $type, verificationLevel: $verificationLevel, zipCode: $zipCode)';
   }
 }
 
@@ -349,11 +681,25 @@ abstract mixin class _$UserModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      String email,
-      String firstName,
-      String lastName,
-      String? avatar});
+      {String address,
+      double balance,
+      String city,
+      String country,
+      int currency,
+      int currentTradesCount,
+      double currentTradesVolume,
+      double equity,
+      double freeMargin,
+      bool isAnyOpenTrades,
+      bool isSwapFree,
+      int leverage,
+      String name,
+      String phone,
+      int totalTradesCount,
+      double totalTradesVolume,
+      int type,
+      int verificationLevel,
+      String zipCode});
 }
 
 /// @nodoc
@@ -368,33 +714,103 @@ class __$UserModelCopyWithImpl<$Res> implements _$UserModelCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? id = null,
-    Object? email = null,
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? avatar = freezed,
+    Object? address = null,
+    Object? balance = null,
+    Object? city = null,
+    Object? country = null,
+    Object? currency = null,
+    Object? currentTradesCount = null,
+    Object? currentTradesVolume = null,
+    Object? equity = null,
+    Object? freeMargin = null,
+    Object? isAnyOpenTrades = null,
+    Object? isSwapFree = null,
+    Object? leverage = null,
+    Object? name = null,
+    Object? phone = null,
+    Object? totalTradesCount = null,
+    Object? totalTradesVolume = null,
+    Object? type = null,
+    Object? verificationLevel = null,
+    Object? zipCode = null,
   }) {
     return _then(_UserModel(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
+      address: null == address
+          ? _self.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: null == balance
+          ? _self.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      city: null == city
+          ? _self.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _self.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      currency: null == currency
+          ? _self.currency
+          : currency // ignore: cast_nullable_to_non_nullable
               as int,
-      email: null == email
-          ? _self.email
-          : email // ignore: cast_nullable_to_non_nullable
+      currentTradesCount: null == currentTradesCount
+          ? _self.currentTradesCount
+          : currentTradesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentTradesVolume: null == currentTradesVolume
+          ? _self.currentTradesVolume
+          : currentTradesVolume // ignore: cast_nullable_to_non_nullable
+              as double,
+      equity: null == equity
+          ? _self.equity
+          : equity // ignore: cast_nullable_to_non_nullable
+              as double,
+      freeMargin: null == freeMargin
+          ? _self.freeMargin
+          : freeMargin // ignore: cast_nullable_to_non_nullable
+              as double,
+      isAnyOpenTrades: null == isAnyOpenTrades
+          ? _self.isAnyOpenTrades
+          : isAnyOpenTrades // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSwapFree: null == isSwapFree
+          ? _self.isSwapFree
+          : isSwapFree // ignore: cast_nullable_to_non_nullable
+              as bool,
+      leverage: null == leverage
+          ? _self.leverage
+          : leverage // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: null == firstName
-          ? _self.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _self.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
-          ? _self.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      totalTradesCount: null == totalTradesCount
+          ? _self.totalTradesCount
+          : totalTradesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalTradesVolume: null == totalTradesVolume
+          ? _self.totalTradesVolume
+          : totalTradesVolume // ignore: cast_nullable_to_non_nullable
+              as double,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int,
+      verificationLevel: null == verificationLevel
+          ? _self.verificationLevel
+          : verificationLevel // ignore: cast_nullable_to_non_nullable
+              as int,
+      zipCode: null == zipCode
+          ? _self.zipCode
+          : zipCode // ignore: cast_nullable_to_non_nullable
               as String,
-      avatar: freezed == avatar
-          ? _self.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }

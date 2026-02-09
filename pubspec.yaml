@@ -97,6 +97,7 @@ flutter:
   assets:
     - assets/translations/
     - assets/img/
+    - assets/json/
 
   fonts:
     - family: Nunito
